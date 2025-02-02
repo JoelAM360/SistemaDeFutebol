@@ -18,7 +18,7 @@ class TorneioTimeController extends BaseController
        $this->torneio = $torneio;
        $this->torneioRepository = new TorneioTimeRepository($this->torneio);
        $this->torneioService = new TorneioTimeService($this->torneio); 
-       parent::__construct($this->torneioRepository, 'times');
+       parent::__construct($this->torneioRepository, 'time');
     }
     
     public function store(TorneioTimeRequest $request) {

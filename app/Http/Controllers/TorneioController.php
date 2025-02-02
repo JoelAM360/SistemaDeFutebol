@@ -28,14 +28,13 @@ class TorneioController extends BaseController
         return response()->json($torneio, 201);
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
     public function update(TorneioRequest $request, $id)
     {
         $torneio = $this->torneioRepository->update($id,$request->validated());
-        return response()->json($torneio, 201);
+        return response()->json($torneio, 200);
     }
     
 }

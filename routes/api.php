@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JogadorController;
 use App\Http\Controllers\AdvogadoController;
@@ -28,8 +29,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -38,11 +37,15 @@ Route::group([
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
     Route::post('me', 'App\Http\Controllers\AuthController@me');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
 });
 
 Route::post('user', [UserController::class, 'store']); // Rota pública
 Route::get('teste', [UserController::class, 'teste']); // Rota pública
 Route::post('recoveryPassword', [UserController::class, 'recoveryPassword']);
+
 
 Route::group([
     'middleware' => 'auth:api',
@@ -60,8 +63,6 @@ Route::group([
     /*Route::post('enviar_solitacao', [TorneioController::class, 'solicitacaoDoTime'])->name('solicitacaoDoTime');
     Route::patch('processarSolicitacaoDoTime', [TorneioController::class, 'processarSolicitacaoDoTime'])->name('processarSolicitacaoDoTime');*/
 });
-
-
 
 Route::post('/confirme_code', function (Request $request) {
     $codigo = Cache::get('codigo_aleatorio');

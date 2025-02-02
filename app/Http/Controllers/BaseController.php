@@ -28,6 +28,10 @@ abstract class BaseController extends Controller
      */
     public function show($id)
     {
+        if($this->repository->find($id) === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        } 
+        
         //Selecionada os atributos da tabel relacionada:
         $this->getValuesByFilter();
         $data = $this->repository->show($id);
@@ -63,7 +67,5 @@ abstract class BaseController extends Controller
            #dd($this->model);
             $this->repository->selectAtributosRelacionados($this->model);
         }
-        
-
     }
 }

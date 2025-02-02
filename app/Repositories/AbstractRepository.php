@@ -50,26 +50,28 @@ class AbstractRepository
         } 
 
         $model->update($request);
-        return $model;
+        
+        return response()->json($model, 200);
     }
 
     public function show($id) {
         $model = $this->model->find($id);
        
         if($model === null) {
-            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404) ;
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         } 
-        return $model;
+        
+        return response()->json($model, 200);
     }
 
     public function delete($id) {
         $model = $this->model->find($id);
 
         if($model === null) {
-            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404) ;
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         } 
 
-        return  $model->delete();
+        return $model->delete();
     }
 
     public function find($id) {       

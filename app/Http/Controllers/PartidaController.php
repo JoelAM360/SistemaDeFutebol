@@ -16,14 +16,28 @@ class PartidaController extends BaseController
     {
         $this->partida = $partida;
         $this->partidaRepository = new partidaRepository($this->partida); 
-        parent::__construct($this->partidaRepository, 'jogadores');
+        parent::__construct($this->partidaRepository, 'torneio');
     }
 
+    public function index(Request $request)
+    {     
+        $this->getValuesByFilter();
+        $partidas = $this->repository->model;
+        
+        $partidas->with(['timeCasa', 'timeFora']);
+
+        return response()->json($this->repository->getModel(), 200);
+    }
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(PartidaRequest $request)
     {
+        if($request->time_id_fora == $request->torneio_id) {
+            return response()->json(['erro' => 'Seleciona times diferentes'], 404) ;
+        }
+
         //Verificando se partida já foi cadastrada:
         $partida_exits = Partida::where('time_id_casa', $request->time_id_casa)
         ->where('time_id_fora', $request->time_id_fora)
@@ -43,6 +57,10 @@ class PartidaController extends BaseController
      */
     public function update(PartidaRequest $request, string $id)
     {
+        if($request->time_id_fora == $request->torneio_id) {
+            return response()->json(['erro' => 'Seleciona times diferentes'], 404) ;
+        }
+        
         $partida_exits = Partida::where('time_id_casa', $request->time_id_casa)
         ->where('time_id_fora', $request->time_id_fora)
         ->where('torneio_id', $request->torneio_id)
