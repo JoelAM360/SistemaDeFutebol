@@ -83,12 +83,34 @@ class GolController extends BaseController
         return response()->json($dados, 201);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(GolRequest $request, $id)
+    public function destroy($id) 
     {
-        //
+        $gol =  $this->golRepository->find($id);
+        
+        if( $gol == null) {
+            return response()->json(['error' => "Recurso pesquisado não existe"], 404);
+        }
+
+        //Atualizar a quantidade de gols de partida para cada time:
+        $gol_do_time = $this->golRepository->model
+                                          ->where('time_id', $gol['time_id'])
+                                          ->where('partida_id', $gol['partida_id'])
+                                          ->get();
+                                          
+        $partida = $this->partidaRepository->find($gol['partida_id']);
+        $total_de_gols = count($gol_do_time)  - 1;
+
+        
+        //Verficar se o time é de casa ou fora:
+        if($this->partidaRepository->timesDeCasa($gol)) {
+            $partida->update(["gol_casa" => $total_de_gols]);
+            
+        } else {
+            $partida->update(["gol_fora" => $total_de_gols]);
+        }
+
+        $gol->delete();
+
+        return response()->json(['message' => "Gol apagado com sucesso"], 200);
     }
 }
