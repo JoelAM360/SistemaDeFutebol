@@ -38,7 +38,18 @@ class PartidaRequest extends FormRequest
             'status' => "required|in:pendente,jogando,terminada,intervalo",
         ];
 
-        $this->validaCaoDinamicaParaOMethodPacth($method, $regras);
+        if ($method == 'PATCH') {
+            $regrasDinamicas = [];
+
+            // Definir as regras de validação para PATCH
+            foreach ($regras as $input => $regra) {
+                if (array_key_exists($input, $this->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            return $regrasDinamicas;
+        }
 
         return $regras;
     }

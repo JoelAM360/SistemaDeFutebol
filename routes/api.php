@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JogadorController;
 use App\Http\Controllers\AdvogadoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\GolController;
 use App\Http\Controllers\PartidaController;
 use App\Http\Controllers\TimeController;
 use App\Http\Controllers\TorneioController;
@@ -54,10 +55,11 @@ Route::group([
     Route::apiResource('user', UserController::class)->except(['store']);
     Route::apiResource('advogado', AdvogadoController::class);
     Route::apiResource('categoria', CategoriaController::class);
-    Route::apiResource('torneio', controller: TorneioController::class);
+    Route::apiResource('torneio',  TorneioController::class);
     Route::apiResource('time', TimeController::class);
     Route::apiResource('partida', PartidaController::class);
     Route::apiResource('torneiotimes', TorneioTimeController::class);
+   Route::apiResource('gol', GolController::class);
     
 
     /*Route::post('enviar_solitacao', [TorneioController::class, 'solicitacaoDoTime'])->name('solicitacaoDoTime');

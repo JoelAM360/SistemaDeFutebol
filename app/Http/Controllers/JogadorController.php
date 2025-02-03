@@ -19,7 +19,7 @@ class JogadorController extends BaseController
     {
         $this->jogador = $jogador;
         $this->jogadorRepository = new JogadorRepository($this->jogador); 
-        parent::__construct($this->jogadorRepository);
+        parent::__construct($this->jogadorRepository, 'time');
     }
 
     /**
