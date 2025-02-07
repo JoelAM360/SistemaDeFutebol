@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -26,26 +27,32 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6'
-        ], [
-             'email.required' => 'O campo e-mail é obrigatório.',
-            'email.email' => 'Insira um e-mail válido.',
-            'password.required' => 'O campo senha é obrigatório.',
-            'password.min' => 'A senha deve ter pelo menos 6 caracteres.'
-        ]);
-        
-        $credentials = $request->only('email', 'password');
 
-        if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6'
+    ], [
+        'email.required' => 'O campo e-mail é obrigatório.',
+        'email.email' => 'Insira um e-mail válido.',
+        'password.required' => 'O campo senha é obrigatório.',
+        'password.min' => 'A senha deve ter pelo menos 6 caracteres.'
+    ]);
 
-         return $this->respondWithToken($token);
+    $credentials = $request->only('email', 'password');
+
+          
+    $token = auth('api')->attempt($credentials);
+    // Gerar token JWT
+
+    if (!$token) {
+        return response()->json(['error' => 'Email e/ou senha inválidos'], 401);
     }
+
+    return $this->respondWithToken($token);
+}
+
 
     /**
      * Get the authenticated User.

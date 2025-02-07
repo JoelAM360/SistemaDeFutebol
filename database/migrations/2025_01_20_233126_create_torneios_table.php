@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nome');
             $table->integer('jornadas');
             $table->integer('quantidade_times');
-            $table->string('img_icon');
             $table->date('data_inicio');
             $table->date('data_termino');
             $table->timestamps();

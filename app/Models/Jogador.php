@@ -20,7 +20,6 @@ class Jogador extends Model
         'nome',
         'advogado_id',
         'time_id',
-        'img_perfil',
         'posicao',
         'dorsal',
         'isCapitao'

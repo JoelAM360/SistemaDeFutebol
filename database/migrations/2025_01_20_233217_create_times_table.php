@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignId('categoria_id')->constrained('categorias_torneios')->onDelete('cascade');
             $table->foreignId('advogado_id')->nullable()->constrained('advogados')->onDelete('set null');
             $table->string('nome');
-            $table->string('img_escudo');
-            $table->enum('status', ['pendente', 'ativo', 'desativado'])->default('pendete');
+            $table->enum('status', ['pendente', 'ativo', 'desativado'])->default('pendente');
             $table->timestamps();
         });
     }

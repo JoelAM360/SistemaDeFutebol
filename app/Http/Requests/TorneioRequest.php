@@ -32,7 +32,6 @@ class TorneioRequest extends FormRequest
             'nome' =>'required|unique:torneios,nome,'.$torneioId,
             'jornadas' => 'required|numeric',
             'quantidade_times' => 'required|numeric',
-            'img_icon' => 'required|file|mimes:png,jpg,jpeg|max:2048',
             'data_inicio' => 'required|date',
             'data_termino' => 'required|date',
             'status' => 'required|in:ativo,desativo',
@@ -63,9 +62,6 @@ class TorneioRequest extends FormRequest
             'numeric' => 'O campo :attibutes deve ser um número',
             'date' => 'O campo :attrinutes deve ser um data',
             'status.in' => 'O campo status deve Ativo ou Inativo',
-            'img_icon.file' => 'O Imagem de Icon deve ser um arquivo(jpg,png,jpge)',
-            'img_icon.mimes' => 'O Imagem de Icon deve ser um arquivo do tipo jpg,png,jpge',
-            'img_icon.max' => 'O arquivo da Imagem de Icon  deve ter 2MB no máximo',
         ];
     }
 }

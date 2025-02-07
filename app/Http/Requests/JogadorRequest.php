@@ -24,7 +24,6 @@ class JogadorRequest extends FormRequest
             'time_id'    => 'required|exists:times,id',
             'advogado_id'    => 'required|exists:advogados,id|unique:jogadores,advogado_id,'.$jogadorId ,
             'posicao'    => 'required|string|in:goleiro,defensor,meio-campo,atacante',
-            'img_perfil' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             //'idade'      => 'required|integer|min:16|max:45',
             'isCapitao' => 'required|in:nao,sim',
             'dorsal' => 'required|integer|unique:jogadores,dorsal,NULL,id,time_id,' . $this->time_id,
@@ -75,10 +74,6 @@ class JogadorRequest extends FormRequest
             'advogado_id.required' => 'O campo "advogado_id" é obrigatório.',
             'advogado_id.exists' => 'O "advogado_id" fornecido não existe na tabela de times.',
             'advogado_id.unique' => 'O "advogado_id" já está associado a outro jogador.',
-
-            'img_perfil.file' => 'O campo "img_perfil" deve ser um arquivo válido.',
-            'img_perfil.mimes' => 'O campo "img_perfil" deve ser um arquivo do tipo: jpeg, png, jpg ou gif.',
-            'img_perfil.max' => 'O arquivo "img_perfil" não pode ser maior que 2 MB.',
         ];
     }
     

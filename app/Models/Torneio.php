@@ -14,7 +14,6 @@ class Torneio extends Model
         'nome',
         'jornadas',
         'quantidade_times',
-        'img_icon',
         'data_inicio',
         'data_termino',
         'status'
@@ -40,5 +39,10 @@ class Torneio extends Model
     public function times()
     {
         return $this->belongsToMany(Time::class, 'torneios_times');
+    }
+
+    public function torneios_times()
+    {
+        return $this->hasMany(TorneioTime::class, 'torneio_id');
     }
 }

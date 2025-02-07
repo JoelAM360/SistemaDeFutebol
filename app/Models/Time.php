@@ -13,7 +13,6 @@ class Time extends Model
         'nome',
         'categoria_id',
         'advogado_id',
-        'img_escudo',
         'status'
     ];
 
@@ -45,6 +44,10 @@ class Time extends Model
         return $this->belongsToMany(Torneio::class, 'torneios_times');
     }
 
+    public function torneios_times()
+    {
+        return $this->hasMany(TorneioTime::class, 'time_id');
+    }
     // Um time pode estar em muitas partidas como casa ou fora
     public function partidasCasa()
     {

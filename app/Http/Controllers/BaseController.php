@@ -33,7 +33,7 @@ abstract class BaseController extends Controller
         } 
         
         //Selecionada os atributos da tabel relacionada:
-        $this->getValuesByFilter();
+        $this->getValuesByFilter();        
         $data = $this->repository->show($id);
 
         return response()->json($data, 200);

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nome');
             $table->foreignId('advogado_id')->constrained('advogados')->onDelete('cascade');
             $table->foreignId('time_id')->nullable()->constrained('times');
-            $table->string('img_perfil');
             $table->enum('posicao', ['goleiro','defensor','meio-campo','atacante']);
             $table->integer('dorsal');
             $table->enum('isCapitao', ['nao', 'sim']);

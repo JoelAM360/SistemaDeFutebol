@@ -17,7 +17,7 @@ class TimeController extends BaseController
     {
         $this->time = $time;
         $this->timeRepository = new TimeRepository($this->time); 
-        parent::__construct($this->timeRepository, 'jogadores');
+        parent::__construct($this->timeRepository, 'categoria');
     }
 
     /**
@@ -27,6 +27,20 @@ class TimeController extends BaseController
     {
         $time = $this->timeRepository->store($request->validated());
         return response()->json($time, 201);
+    }
+    public function show($id)
+    {
+        if($this->timeRepository->find($id) === null) {
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        } 
+        
+        //Selecionada os atributos da tabel relacionada:
+        $this->getValuesByFilter();
+        $this->timeRepository->model->with(['torneios', 'torneios_times']);
+        
+        $data = $this->repository->show($id);
+
+        return response()->json($data, 200);
     }
 
     /**

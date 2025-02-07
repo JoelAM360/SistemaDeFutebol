@@ -31,11 +31,20 @@ class TimeRequest extends FormRequest
             'nome' => 'required|min:6|max:45',
             'categoria_id' => 'required|exists:categorias_torneios,id',
             'advogado_id' => 'required|unique:times,advogado_id,'.$timesId.'|exists:advogados,id',
-            'img_escudo' => 'required|file|mimes:png,jpg,jpeg|max:2048',
             'status' => 'required|in:ativo,desativo,pendente'
         ];
 
-        $this->validaCaoDinamicaParaOMethodPacth($method, $regras);
+        if ($method == 'PATCH') {
+            $regrasDinamicas = [];
+            // Definir as regras de validação para PATCH
+            foreach ($regras as $input => $regra) {
+                if (array_key_exists($input, $this->all())) {
+                    $regrasDinamicas[$input] = $regra;
+                }
+            }
+
+            return $regrasDinamicas;
+        }
 
         return $regras;
     }
@@ -47,9 +56,7 @@ class TimeRequest extends FormRequest
             'advogado_id.required'=> 'Você precisa criar um perfil de advogado (obrigatório)',
             'categoria_id.exists' => 'A categoria selecionada não existe',
             'advogado_id.exists' => 'Você precisa criar um perfil de advogado (obrigatório). Informações inválidas',
-            'advogado_id'=> 'Você não cadstrar mais de um time',
-            'img_escudo.file' => 'O campo Imagem do Escudo deve ser um arquivo(png,jpg,jpeg)',
-            'img_escudo.mimes' => 'O campo Imagem do Escudo deve ser um arquivo do tipo:png,jpg ou jpeg',
+            'advogado_id'=> 'Você não pode cadastrar mais de um time',
             'nome.max' => "O nome do time deve ter no máximo 45 caractres",
             'nome.min' => "O nome do time deve ter no mínimo 6 caractres",
         ];

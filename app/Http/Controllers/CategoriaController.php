@@ -16,7 +16,7 @@ class CategoriaController extends BaseController
     public function __construct(CategoriaTorneio $categoria) {
         $this->categoria = $categoria;
         $this->categoriaRepository = new CategoriaRepository($this->categoria);
-        parent::__construct($this->categoriaRepository);
+        parent::__construct($this->categoriaRepository, 'torneios');
     }
 
     /**
